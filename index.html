@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Know you with AI</title>
+    <title>Info Finder with AI</title>
     <style>
         * {
             box-sizing: border-box;
@@ -350,13 +350,13 @@
             // Construct the prompt based on the selected type
             switch (selectedType) {
                 case 'meditation':
-                    prompt = `it should be well structure`;
+                    prompt = `Give me concise details about the meditation technique "${itemName}":\n\n**Advantages:**\n(Mental/physical benefits. Max 50 words.)\n\n**Disadvantages:**\n(Limitations or cautions. Max 50 words.)\n\n**Conclusion:**\n(Brief summary/overall suitability. Max 30 words.)`;
                     break;
                 case 'food':
-                    prompt = `it should be well structure`;
+                    prompt = `Give me concise details about the food "${itemName}":\n\n**Advantages:**\n(Nutritional benefits/pros. Max 50 words.)\n\n**Disadvantages:**\n(Potential drawbacks/health considerations. Max 50 words.)\n\n**Conclusion:**\n(Brief summary/overall health aspect. Max 30 words.)`;
                     break;
                 case 'exercise':
-                    prompt = `it should be well structured`;
+                    prompt = `Give me concise details about the exercise "${itemName}":\n\n**Advantages:**\n(Key physical/mental benefits. Max 50 words.)\n\n**Disadvantages:**\n(Risks, limitations, or required equipment. Max 50 words.)\n\n**Conclusion:**\n(Brief summary/who it's good for. Max 30 words.)`;
                     break;
                 default:
                      responseDiv.innerHTML = `<p class='error'>Invalid category selected.</p>`;
