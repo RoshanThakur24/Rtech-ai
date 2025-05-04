@@ -1,423 +1,294 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Info Finder with AI</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
+  <title>GET FIT GYM</title> 
+  
+  <style>  
+  
+  * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+  
+    body {  
+      margin: 0;  
+      padding: 0;  
+      font-family: sans-serif;  
+      line-height: 1.15;  
+      background-color:black;  
+    }
+ 
+  * {
+  -webkit-tap-highlight-color: transparent;
+}
+  
+  .floatbar {  
+  display: flex;  
+  justify-content: center;  
+  align-items: center;  
+  height: 70px;  
+  width: 100%;  
+  background: #020024;
+  background: radial-gradient(circle, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 18%, rgba(6, 5, 79, 1) 34%, rgba(8, 7, 103, 1) 36%, rgba(6, 70, 157, 1) 44%, rgba(2, 165, 224, 1) 55%, rgba(1, 183, 236, 1) 58%, rgba(3, 142, 209, 1) 65%, rgba(5, 102, 183, 1) 72%, rgba(0, 212, 255, 1) 78%, rgba(0, 201, 248, 1) 83%, rgba(6, 71, 162, 1) 84%, rgba(4, 109, 187, 1) 84%, rgba(4, 121, 195, 1) 84%, rgba(6, 89, 174, 1) 85%, rgba(7, 56, 152, 1) 85%, rgba(6, 55, 144, 1) 85%, rgba(4, 105, 181, 1) 92%, rgba(2, 156, 218, 1) 98%, rgba(1, 189, 240, 1) 100%, rgba(2, 164, 223, 1) 100%, rgba(1, 179, 233, 1) 100%, rgba(0, 196, 245, 1) 100%, rgba(1, 174, 230, 1) 100%, rgba(3, 147, 212, 1) 100%); 
+  padding: 0 10px;  
+  box-sizing: border-box;  
+}  
 
-        /* CSS Variables for theming */
-        :root {
-            /* Default Theme: Food (can be overridden by body class) */
-            --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            --text-color: #fff;
-            --placeholder-opacity: 0.7;
-            --heading-shadow-color: rgba(0, 255, 255, 0.7); /* Cyan */
-            --form-bg-color: rgba(255, 255, 255, 0.08);
-            --form-shadow-color: rgba(0, 255, 255, 0.25); /* Cyan */
-            --radio-bg-color: rgba(255, 255, 255, 0.1);
-            --radio-hover-bg-color: rgba(255, 255, 255, 0.2);
-            --radio-accent-color: #00c6ff; /* Blue */
-            --input-bg-color: rgba(255, 255, 255, 0.2);
-            --input-focus-shadow-color: cyan;
-            --button-gradient: linear-gradient(to right, #00c6ff, #0072ff); /* Blue */
-            --button-text-color: white;
-            --button-hover-shadow-color: rgba(0, 255, 255, 0.35); /* Cyan */
-            --response-bg-color: rgba(0, 0, 0, 0.6);
-            --response-text-color: #ddd;
-            --response-heading-color: #00ffff; /* Cyan */
-            --response-border-color: rgba(0, 255, 255, 0.2); /* Cyan Transparent */
-            --response-heading-border-color: rgba(0, 255, 255, 0.3); /* Cyan Transparent */
-        }
+.title {  
+  position:relative;  
+  margin-left:8px;  
+  font-size: 30px;  
+  color: rgb(237, 246, 249); /* or any text color */  
+  text-shadow:    
+  0 0 60px #0ff,  
+  0 0 15px #0ff,  
+ 0 0 20px #0ff;  
+ }  
+  
 
-        /* Meditation Theme Overrides */
-        body.theme-meditation {
-            --bg-gradient: linear-gradient(135deg, #a18cd1, #fbc2eb);
-            --text-color: #2e1e4d;
-            --placeholder-opacity: 0.6;
-            --heading-shadow-color: rgba(255, 255, 255, 0.6);
-            --form-bg-color: rgba(255, 255, 255, 0.1);
-            --form-shadow-color: rgba(255, 255, 255, 0.15);
-            --radio-bg-color: rgba(255, 255, 255, 0.2);
-            --radio-hover-bg-color: rgba(255, 255, 255, 0.3);
-            --radio-accent-color: #a18cd1; /* Primary Purple */
-            --input-bg-color: rgba(255, 255, 255, 0.2);
-            --input-focus-shadow-color: #e0c3fc; /* Light Purple */
-            --button-gradient: linear-gradient(to right, #d3cce3, #e9e4f0); /* Light Purple/Gray */
-            --button-text-color: #2e1e4d; /* Dark Purple */
-            --button-hover-shadow-color: rgba(255, 255, 255, 0.3);
-            --response-bg-color: rgba(255, 255, 255, 0.1);
-            --response-text-color: #2e1e4d; /* Dark Purple */
-            --response-heading-color: #6a4b8a; /* Medium Purple */
-            --response-border-color: rgba(106, 75, 138, 0.2); /* Medium Purple Transparent */
-            --response-heading-border-color: rgba(106, 75, 138, 0.3); /* Medium Purple Transparent */
-        }
+#menuToggle {
+  position: relative;
+  left: 30px;
+  z-index: 999;
+  border: none;
+  height: 50px;
+  width: 50px;
+  font-size: 30px;
+  color: white;
+  border-radius: 25px;
+  cursor: pointer;
+  background: linear-gradient(45deg, oklab(40.8% -0.01 -0.237), oklab(33.8% 0.008 -0.178), oklab(27% 0.02 -0.12), oklab(20.4% 0.021 -0.059), oklab(0% 0 0));
+  transition: all 0.4s ease-in-out;
+  backdrop-filter: blur(0px);
+  opacity: 1;
+}
+  
+  #menuToggle.active {
+  opacity: 0.8;
+  backdrop-filter: blur(6px);
+  transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(72, 202, 228, 0.8);
+}
+  
+#menuToggle {
+-webkit-tap-highlight-color: transparent;
+}
 
-        /* Exercise Theme Overrides */
-        body.theme-exercise {
-            --bg-gradient: linear-gradient(135deg, #1c1c3c, #3a1c71, #d76d77);
-            --text-color: #fff;
-            --placeholder-opacity: 0.7;
-            --heading-shadow-color: rgba(255, 200, 100, 0.7); /* Orange/Yellow */
-            --form-bg-color: rgba(255, 255, 255, 0.05);
-            --form-shadow-color: rgba(255, 200, 100, 0.2); /* Orange/Yellow */
-            --radio-bg-color: rgba(255, 255, 255, 0.1);
-            --radio-hover-bg-color: rgba(255, 255, 255, 0.2);
-            --radio-accent-color: #ff8008; /* Orange */
-            --input-bg-color: rgba(255, 255, 255, 0.2);
-            --input-focus-shadow-color: orange;
-            --button-gradient: linear-gradient(to right, #ff8008, #ffc837); /* Orange/Yellow */
-            --button-text-color: white;
-            --button-hover-shadow-color: rgba(255, 200, 100, 0.3); /* Orange/Yellow */
-            --response-bg-color: rgba(0, 0, 0, 0.6);
-            --response-text-color: #ddd;
-            --response-heading-color: #ffc837; /* Yellow/Orange */
-            --response-border-color: rgba(255, 200, 100, 0.2); /* Orange/Yellow Transparent */
-            --response-heading-border-color: rgba(255, 200, 100, 0.3); /* Orange/Yellow Transparent */
-        }
+.sidebar {  
+  height: 180px;  
+  width: 140px;  
+  border-radius: 30px;  
+  background: radial-gradient(circle, hsla(236, 100%, 8%, 1) 0%, hsla(211, 100%, 28%, 1) 100%);  
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;  
+  position: fixed;  
+  z-index: 998;  
+  top: 80px;  
+  right: -150px;  
+  transition: right 0.3s ease-in-out;  
+}  
 
-        /* General Styles using Variables */
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px 10px;
-            background: var(--bg-gradient);
-            color: var(--text-color);
-            overflow-x: hidden;
-            transition: background 0.5s ease; /* Smooth background transition */
-        }
+.sidebar.open {  
+  right: 10px;  
+}  
 
-        h2 {
-            font-size: 2rem;
-            text-shadow: 0 0 8px var(--heading-shadow-color);
-            margin-bottom: 25px;
-            text-align: center;
-            transition: text-shadow 0.5s ease;
-        }
+.link {  
+  text-align: center;  
+  line-height: 0.9;  
+  font-size: 24px;  
+  color: white;  
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8);  
+  padding-bottom: 10px;  
+  margin: 11px;  
+}  
 
-        #infoFormContainer {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 95%;
-            max-width: 500px;
-            padding: 30px;
-            background: var(--form-bg-color);
-            border-radius: 15px;
-            box-shadow: 0 6px 20px var(--form-shadow-color);
-            backdrop-filter: blur(10px);
-            margin-bottom: 20px;
-            transition: background 0.5s ease, box-shadow 0.5s ease;
-        }
+.sidebar a {  
+  text-decoration: none;  
+  color: white;  
+}  
 
-        /* Make form flex container to center its content */
-        #infoForm {
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Centers children like button */
-            width: 100%; /* Takes full width of its container */
-        }
+#quoto {  
+  pisition:relative;  
+  padding-top:20px;  
+  text-align: center;  
+  margin-top: 20px;  
+  font-size: 22px;  
+  padding-bottom:60px;  
+  line-height:1.2;
+  color:white;
+    
+}
+
+.typewriter {
+list-style: none;
+padding:0px;
+margin:0px;
+color:white;
+text-align:center;
+font-size:22px;
+line-height:1.5;
+}
 
 
-        #categorySelection {
-            margin-bottom: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-        }
 
-        #categorySelection label {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 5px;
-            background-color: var(--radio-bg-color);
-            transition: background-color 0.3s ease;
-            color: var(--text-color); /* Ensure label text matches theme */
-        }
+@keyframes typing {
+from { width: 0; }
+to { width: 100%; }
+}
 
-        #categorySelection label:hover {
-            background-color: var(--radio-hover-bg-color);
-        }
+ .photo {  
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center;    /* Horizontally center content */
+  justify-content: center; /* Vertically center if height expands */
+  max-width: px;
+  margin: 45px 5px;       /* Center the container itself */
+  border-radius: 20px;  
+  padding: 10px;  
+  background: linear-gradient(90deg, #f7ba2c 0%, #ea5459 100%);    
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;  
+  text-align: center;      /* Center any text inside */
+  box-shadow: rgba(0, 119, 182.25) 0px 14px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;  
 
-        #categorySelection input[type="radio"] {
-            margin-right: 8px;
-            accent-color: var(--radio-accent-color); /* Themed radio button */
-            cursor: pointer;
-        }
+}
 
-        #itemInput {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 20px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            background-color: var(--input-bg-color);
-            color: var(--text-color); /* Input text color matches theme */
-            transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
-        }
+.image {  
+  display: block;  
+  width: 100%;  
+  height: auto;  
+  margin-top: 10px;  
+  border-radius: 12px;  
+  cursor: pointer;  
+}
+  
+  
+  #video-container {
+  display: grid;
+  place-items: center;
+  padding:25px 0px;
+  
+}
 
-        #itemInput::placeholder {
-            color: var(--text-color); /* Use theme text color */
-            opacity: var(--placeholder-opacity); /* Control transparency via variable */
-            transition: opacity 0.3s ease;
-        }
+video {
+  border-radius: 22px;
+  
+  max-width: 280px;  
+  
+  box-shadow: rgba(3, 4, 94.25) 0px 24px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;  
 
-        #itemInput:focus {
-            outline: none;
-            /* background-color adjusted slightly on focus if needed */
-            box-shadow: 0 0 12px var(--input-focus-shadow-color);
-        }
+  
+}
 
-        #infoForm button {
-            background: var(--button-gradient);
-            color: var(--button-text-color);
-            padding: 12px 25px;
-            border: none;
-            border-radius: 10px;
-            font-size: 17px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.5s ease, color 0.5s ease;
-            width: auto; /* Let button size naturally */
-            min-width: 150px; /* Ensure minimum width */
-            max-width: 200px; /* Control maximum width */
-            /* Centering is handled by the parent #infoForm flex settings */
-        }
+iframe {  
+/**  display: block; **/
+  display:flex;
+  justify-content: center;
+  margin:35px auto;  
+  border-radius: 12px;  
+  box-shadow: rgba(2, 62, 138.25) 0px 24px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;  
+}  
+  
+  
+  footer{
+            text-align:center;
+            margin-top:30px;
+            margin-bottom:10px;
+            line-height:1.3;
+            font-size:14px;
+            color:white;
+  }
 
-        #infoForm button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 18px var(--button-hover-shadow-color);
-        }
 
-        #response {
-            width: 95%;
-            max-width: 650px;
-            margin-top: 25px;
-            padding: 25px;
-            background: var(--response-bg-color);
-            border-radius: 12px;
-            box-shadow: 0 4px 15px var(--form-shadow-color); /* Use form shadow color */
-            display: none;
-            line-height: 1.6;
-            border: 1px solid var(--response-border-color);
-            transition: background 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease, color 0.5s ease;
 
-  font-family: "JetBrains Mono", monospace;
-        }
+</style>  
+</head>  
+<body>    
+  
+  <body>
+  
+    
+  <div class="floatbar">
+<h1 class="title">GET FIT GYM</h1>
+<button id="menuToggle">☰</button>
+  </div>    
+    
+    
+<div     id="sideMenu"  class="sidebar">  
+    <a href="">  
+      <h1 class="link" style="font-size:21px;">admission</h1>  
+    </a>
+    <h1 class="link">contact</h1>  
+    <h1 class="link">media</h1>  
+    <h1 class="link" style="border-bottom:none;">about us</h1>  
+  
+</div>     
+    
+    
+<h1 id="quoto">  
+  "I hated every minute of training, but I said, 'Don't quit. Suffer now and live the rest of your life as a champion.'" -   
+  <a href="https://en.wikipedia.org/wiki/Muhammad_Ali" target="_blank" style="color: darkred; font-style: italic; text-decoration: none;">  
+    Muhammad Ali  
+  </a>
+</h1>    
+      
+      
+      
+<div class="highlight"></div>
+<ul class="typewriter">  
+  <li>Open time 5:00.......A.M</li>  
+  <li>Close time 9:00......P.M</li>  
+  <li>Sunday off</li>  
+  <li>Trainer available</li>  
+</ul>    
+     
+    
+  <div class="photo">  
+  <img class="image" src="assets/one.jpg" alt="Gym Image 1">  
+  <img class="image" src="assets/two.jpg" alt="Gym Image 2">  
+  <img class="image" src="assets/three.jpg" alt="Gym Image 3">  
+  <img class="image" src="assets/four.jpg" alt="Gym Image 4">
+</div>
+      
+    <div id="video-container">
+  <video autoplay loop muted>
+    <source src="assets/gym.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+      
+      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d28680.51424886437!2d93.7633824!3d26.0314527!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3746752d6dfe2185%3A0xeab191399357cc9f!2sGet%20Fit%20Gym!5e0!3m2!1sen!2sin!4v1746192880877!5m2!1sen!2sin" width="300" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    
+    
+    <footer>
+© [2025] Website Design & Devloped by Roshan Thakur. All rights reserved.</footer>
+  
+<script>  
+  
+  document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();  // Disable right-click context menu
+});
 
-        #response h3 {
-            color: var(--response-heading-color);
-            margin-bottom: 15px;
-            border-bottom: 1px solid var(--response-heading-border-color);
-            padding-bottom: 8px;
-            transition: color 0.5s ease, border-color 0.5s ease;
-        }
-
-        #response p {
-            color: var(--response-text-color);
-            font-size: 16px;
-            margin-bottom: 10px;
-            transition: color 0.5s ease;
-        }
-
-        #response p:last-child {
-            margin-bottom: 0;
-        }
-
-        #response p.error {
-            color: #ff6b6b; /* Keep error color consistent */
-            font-weight: bold;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 600px) {
-            h2 {
-                font-size: 1.6rem;
-            }
-            #infoFormContainer { padding: 20px; }
-            #categorySelection { gap: 10px; }
-            #itemInput, #infoForm button { font-size: 15px; }
-            #infoForm button { padding: 10px 20px; min-width: 130px; max-width: 180px; }
-            #response { padding: 20px; max-width: 95%; }
-            #response p { font-size: 15px; }
-        }
-    </style>
-</head>
-<body class="theme-meditation"> <h2>AI Information Finder</h2>
-
-    <div id="infoFormContainer">
-        <form id="infoForm">
-            <div id="categorySelection">
-                <label>
-                    <input type="radio" name="infoType" value="meditation" checked> Meditation
-                </label>
-                <label>
-                    <input type="radio" name="infoType" value="food"> Food
-                </label>
-                <label>
-                    <input type="radio" name="infoType" value="exercise"> Exercise
-                </label>
-            </div>
-
-            <input type="text" id="itemInput" placeholder="Enter meditation technique..." required />
-            <button type="submit">Get Info</button>
-        </form>
-    </div>
-
-    <div id="response"></div>
-
-    <script>
-        const infoForm = document.getElementById("infoForm");
-        const itemInput = document.getElementById("itemInput");
-        const responseDiv = document.getElementById("response");
-        const categoryRadios = document.querySelectorAll('input[name="infoType"]');
-        const body = document.body; // Get body element
-
-        // --- IMPORTANT: API Key Handling ---
-        // Replace "YOUR_API_KEY" with your actual Google AI API key.
-        // WARNING: Storing API keys directly in client-side JavaScript is insecure
-        // for production applications. Consider using a backend proxy.
-        const apiKey = "AIzaSyDQyBSFNQ_TVL70KbfLL4-BziDcX9IwXxs"; // <<< REPLACE WITH YOUR KEY
-        // --- End API Key Section ---
-
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
-        // Function to apply theme and update placeholder
-        function applyThemeAndUpdatePlaceholder() {
-            const selectedType = document.querySelector('input[name="infoType"]:checked').value;
-            const themeClassName = `theme-${selectedType}`;
-
-            // Remove existing theme classes from body
-            body.classList.remove('theme-meditation', 'theme-food', 'theme-exercise');
-
-            // Add the new theme class to body
-            body.classList.add(themeClassName);
-
-            // Update placeholder text based on selected category
-            switch (selectedType) {
-                case 'meditation':
-                    itemInput.placeholder = "e.g., Mindfulness, Transcendental...";
-                    break;
-                case 'food':
-                    itemInput.placeholder = "e.g., Pizza, Apple, Salad...";
-                    break;
-                case 'exercise':
-                    itemInput.placeholder = "e.g., Push-ups, Squats, Running...";
-                    break;
-                default:
-                    itemInput.placeholder = "Enter item name...";
-            }
-        }
-
-        // Add event listeners to radio buttons
-        categoryRadios.forEach(radio => {
-            radio.addEventListener('change', applyThemeAndUpdatePlaceholder);
-        });
-
-        // Initial theme setup on page load
-        // Ensure the default checked radio matches the default body class
-        applyThemeAndUpdatePlaceholder();
-
-        // Handle form submission
-        infoForm.addEventListener("submit", async function(event) {
-            event.preventDefault();
-
-            const itemName = itemInput.value.trim();
-            const selectedType = document.querySelector('input[name="infoType"]:checked').value;
-
-            if (!itemName) {
-                responseDiv.style.display = "block";
-                responseDiv.innerHTML = `<p class='error'>Please enter a ${selectedType} name.</p>`;
-                return;
-            }
-
-            responseDiv.style.display = "block";
-            responseDiv.innerHTML = "<p>Fetching data...</p>";
-
-            let prompt = "";
-
-            // Construct the prompt based on the selected type
-            switch (selectedType) {
-                case 'meditation':
-                    prompt = `Give me concise details about the meditation technique "${itemName}":\n\n**Advantages:**\n(Mental/physical benefits. Max 50 words.)\n\n**Disadvantages:**\n(Limitations or cautions. Max 50 words.)\n\n**Conclusion:**\n(Brief summary/overall suitability. Max 30 words.)`;
-                    break;
-                case 'food':
-                    prompt = `Give me concise details about the food "${itemName}":\n\n**Advantages:**\n(Nutritional benefits/pros. Max 50 words.)\n\n**Disadvantages:**\n(Potential drawbacks/health considerations. Max 50 words.)\n\n**Conclusion:**\n(Brief summary/overall health aspect. Max 30 words.)`;
-                    break;
-                case 'exercise':
-                    prompt = `Give me concise details about the exercise "${itemName}":\n\n**Advantages:**\n(Key physical/mental benefits. Max 50 words.)\n\n**Disadvantages:**\n(Risks, limitations, or required equipment. Max 50 words.)\n\n**Conclusion:**\n(Brief summary/who it's good for. Max 30 words.)`;
-                    break;
-                default:
-                     responseDiv.innerHTML = `<p class='error'>Invalid category selected.</p>`;
-                     return;
-            }
-
-            const requestBody = {
-                contents: [{ parts: [{ text: prompt }] }],
-                generationConfig: {
-                    maxOutputTokens: 250,
-                },
-                 // Add safety settings if desired (recommended)
-                // safetySettings: [
-                //    { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-                //    { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-                //    { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-                //    { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" }
-                // ],
-            };
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(requestBody)
-                });
-
-                if (!response.ok) {
-                     const errorData = await response.json();
-                     console.error("API Error Response:", errorData);
-                    throw new Error(`API Error: ${response.status} ${response.statusText}. Check console for details.`);
-                }
-
-                const data = await response.json();
-                const outputText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-
-                 if (outputText) {
-                     const formattedText = outputText
-                         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                         .replace(/\n/g, "<br>");
-                     responseDiv.innerHTML = `<h3>${itemName} (${selectedType.charAt(0).toUpperCase() + selectedType.slice(1)})</h3><p>${formattedText}</p>`;
-                 } else if (data.promptFeedback?.blockReason) {
-                      responseDiv.innerHTML = `<p class='error'>Response blocked due to safety settings. Reason: ${data.promptFeedback.blockReason}</p>`;
-                      console.error("Content Blocked:", data.promptFeedback);
-                 }
-                 else {
-                     responseDiv.innerHTML = "<p class='error'>No valid response received from AI. The response structure might have changed.</p>";
-                     console.error("Unexpected API response structure:", data);
-                 }
-
-            } catch (error) {
-                responseDiv.innerHTML = `<p class='error'>Error: ${error.message}</p>`;
-                console.error("Fetch Error:", error);
-            }
-        });
-    </script>
-
-</body>
-</html>
+document.addEventListener('keydown', function(e) {
+  // Disable F12 and Ctrl+Shift+I (DevTools open shortcuts)
+  if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C'))) {
+    e.preventDefault();
+  }
+});
+  
+    const menuToggle = document.getElementById('menuToggle');  
+    const sideMenu = document.getElementById('sideMenu');  
+    let isOpen = false;  
+  
+    menuToggle.addEventListener('click', () => {  
+      isOpen = !isOpen;  
+      sideMenu.classList.toggle('open');  
+      menuToggle.textContent = isOpen ? '×' : '☰';
+      menuToggle.classList.toggle('active', isOpen);     
+    }); 
+    
+    
+  </script>
+ </body>  
+</html>  
