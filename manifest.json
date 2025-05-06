@@ -1,4 +1,5 @@
 {
+  "display": "standalone"
   "name": "GET FIT GYM",
   "short_name": "Gym",
   "start_url": "index.html",
