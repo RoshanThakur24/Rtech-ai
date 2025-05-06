@@ -289,7 +289,10 @@ document.addEventListener('keydown', function(e) {
       menuToggle.textContent = isOpen ? '×' : '☰';
       menuToggle.classList.toggle('active', isOpen);     
     }); 
-    
+
+  if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+  }
     
   </script>
  </body>  
