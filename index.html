@@ -5,28 +5,32 @@
   <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#020024">
   <title>GET FIT GYM</title> 
-  
+
   <style>  
-  
+
   * {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
-  
+
     body {  
       margin: 0;  
       padding: 0;  
       font-family: sans-serif;  
       line-height: 1.15;  
-      background-color:black;  
+      background-color:black; 
+      display:flex;
+     justify-content:center;
+     align-items:center;
+     flex-direction:column;      
     }
- 
+
   * {
   -webkit-tap-highlight-color: transparent;
 }
-  
+
   .floatbar {  
   display: flex;  
   justify-content: center;  
@@ -49,7 +53,7 @@
   0 0 15px #0ff,  
  0 0 20px #0ff;  
  }  
-  
+
 
 #menuToggle {
   position: relative;
@@ -67,14 +71,14 @@
   backdrop-filter: blur(0px);
   opacity: 1;
 }
-  
+
   #menuToggle.active {
   opacity: 0.8;
   backdrop-filter: blur(6px);
   transform: scale(1.1);
   box-shadow: 0 0 12px rgba(72, 202, 228, 0.8);
 }
-  
+
 #menuToggle {
 -webkit-tap-highlight-color: transparent;
 }
@@ -111,28 +115,29 @@
   color: white;  
 }  
 
-#quoto {  
-  pisition:relative;  
-  padding-top:20px;  
-  text-align: center;  
-  margin-top: 20px;  
-  font-size: 22px;  
-  padding-bottom:60px;  
-  line-height:1.2;
-  color:white;
-    
+.message{  
+    height:auto;
+    width:auto;
+    margin:40px 10px 40px 10px;
+    border-radius:22px;
+    background-color:#212121;
+    color:grey;
+    font-size:12px;
+    text-align:center;
 }
-
-.typewriter {
-list-style: none;
-padding:0px;
-margin:0px;
-color:white;
-text-align:center;
-font-size:22px;
-line-height:1.5;
-}
-
+  
+  .timetable{
+    height:auto;
+    width:auto;
+    margin:15px;
+    padding-right:46px;
+    border-radius:22px;
+    background-color:#212121;
+    color:grey;
+    font-size:20px;
+    text-align:center;
+    line-height:1.4;
+  }
 
 
 @keyframes typing {
@@ -164,23 +169,23 @@ to { width: 100%; }
   border-radius: 12px;  
   cursor: pointer;  
 }
-  
-  
+
+
   #video-container {
   display: grid;
   place-items: center;
   padding:25px 0px;
-  
+
 }
 
 video {
   border-radius: 22px;
-  
+
   max-width: 280px;  
-  
+
   box-shadow: rgba(3, 4, 94.25) 0px 24px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;  
 
-  
+
 }
 
 iframe {  
@@ -191,8 +196,8 @@ iframe {
   border-radius: 12px;  
   box-shadow: rgba(2, 62, 138.25) 0px 24px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;  
 }  
-  
-  
+
+
   footer{
             text-align:center;
             margin-top:30px;
@@ -207,16 +212,16 @@ iframe {
 </style>  
 </head>  
 <body>    
-  
+
   <body>
-  
-    
+
+
   <div class="floatbar">
 <h1 class="title">GET FIT GYM</h1>
 <button id="menuToggle">☰</button>
   </div>    
-    
-    
+
+
 <div     id="sideMenu"  class="sidebar">  
     <a href="">  
       <h1 class="link" style="font-size:21px;">admission</h1>  
@@ -224,50 +229,50 @@ iframe {
     <h1 class="link">contact</h1>  
     <h1 class="link">media</h1>  
     <h1 class="link" style="border-bottom:none;">about us</h1>  
-  
+
 </div>     
-    
-    
-<h1 id="quoto">  
+
+    <div class="message">
+<h1>  
   "I hated every minute of training, but I said, 'Don't quit. Suffer now and live the rest of your life as a champion.'" -   
   <a href="https://en.wikipedia.org/wiki/Muhammad_Ali" target="_blank" style="color: darkred; font-style: italic; text-decoration: none;">  
     Muhammad Ali  
   </a>
 </h1>    
-      
-      
-      
-<div class="highlight"></div>
-<ul class="typewriter">  
+</div>
+
+
+<div class="timetable">
+<ul style="list-style: none;">  
   <li>Open time 5:00.......A.M</li>  
   <li>Close time 9:00......P.M</li>  
   <li>Sunday off</li>  
   <li>Trainer available</li>  
 </ul>    
-     
-    
+</div>
+
   <div class="photo">  
   <img class="image" src="one.jpg" alt="Gym Image 1">  
   <img class="image" src="two.jpg" alt="Gym Image 2">  
   <img class="image" src="three.jpg" alt="Gym Image 3">  
   <img class="image" src="four.jpg" alt="Gym Image 4">
 </div>
-      
+
     <div id="video-container">
   <video autoplay loop muted>
     <source src="gym.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 </div>
-      
+
       <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d28680.51424886437!2d93.7633824!3d26.0314527!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3746752d6dfe2185%3A0xeab191399357cc9f!2sGet%20Fit%20Gym!5e0!3m2!1sen!2sin!4v1746192880877!5m2!1sen!2sin" width="300" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    
-    
+
+
     <footer>
 © [2025] Website Design & Devloped by Roshan Thakur. All rights reserved.</footer>
-  
+
 <script>  
-  
+
   document.addEventListener('contextmenu', function(e) {
   e.preventDefault();  // Disable right-click context menu
 });
@@ -278,11 +283,11 @@ document.addEventListener('keydown', function(e) {
     e.preventDefault();
   }
 });
-  
+
     const menuToggle = document.getElementById('menuToggle');  
     const sideMenu = document.getElementById('sideMenu');  
     let isOpen = false;  
-  
+
     menuToggle.addEventListener('click', () => {  
       isOpen = !isOpen;  
       sideMenu.classList.toggle('open');  
@@ -293,7 +298,7 @@ document.addEventListener('keydown', function(e) {
   if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
   }
-    
+
   </script>
  </body>  
 </html>  
