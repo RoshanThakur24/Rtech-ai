@@ -1,488 +1,304 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <!-- Viewport for responsive scaling -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Theme color for address bar on mobile -->
-  <meta name="theme-color" content="#020024" />
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#020024">
+  <title>GET FIT GYM</title> 
 
-  <title>GET FIT GYM</title>
+  <style>  
 
-  <!-- Link to external stylesheet -->
-  <link rel="stylesheet" href="styles.css" />
+  * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 
-  <!-- Critical CSS for the floating header (so it renders immediately) -->
-  <style>
-    /* Prevent text selection and tap highlighting globally */
-    *, *::before, *::after {
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    /* Floating header - fixed at top, translucent “frosted glass” */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 1rem;
-      backdrop-filter: blur(10px);
-      background-color: rgba(2, 0, 36, 0.75);
-      z-index: 1000;
-      transform: translateY(-100%);
-      animation: slideDown 0.5s forwards ease-out;
-    }
-    @keyframes slideDown {
-      to { transform: translateY(0); }
+    body {  
+      margin: 0;  
+      padding: 0;  
+      font-family: sans-serif;  
+      line-height: 1.15;  
+      background-color:black; 
+      display:flex;
+     justify-content:center;
+     align-items:center;
+     flex-direction:column;      
     }
 
-    /* Hamburger button in the header */
-    #menuToggle {
-      width: 2.5rem;
-      height: 2.5rem;
-      border: none;
-      background: none;
-      font-size: 1.8rem;
-      color: #ffffff;
-      cursor: pointer;
-      position: relative;
-      z-index: 1001;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-    }
-    #menuToggle:hover {
-      transform: scale(1.1);
-      opacity: 0.85;
-    }
-    #menuToggle.active {
-      transform: rotate(90deg) scale(1.1);
-    }
+  * {
+  -webkit-tap-highlight-color: transparent;
+}
 
-    /* Title text */
-    .site-title {
-      font-size: 1.75rem;
-      font-weight: 600;
-      color: #edf6f9;
-      text-shadow:
-        0 0 10px #0ff,
-        0 0 4px #0ff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-                   Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-    }
+  .floatbar {  
+  display: flex;  
+  justify-content: center;  
+  align-items: center;  
+  height: 70px;  
+  width: 100%;  
+  background: #020024;
+  background: radial-gradient(circle, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 18%, rgba(6, 5, 79, 1) 34%, rgba(8, 7, 103, 1) 36%, rgba(6, 70, 157, 1) 44%, rgba(2, 165, 224, 1) 55%, rgba(1, 183, 236, 1) 58%, rgba(3, 142, 209, 1) 65%, rgba(5, 102, 183, 1) 72%, rgba(0, 212, 255, 1) 78%, rgba(0, 201, 248, 1) 83%, rgba(6, 71, 162, 1) 84%, rgba(4, 109, 187, 1) 84%, rgba(4, 121, 195, 1) 84%, rgba(6, 89, 174, 1) 85%, rgba(7, 56, 152, 1) 85%, rgba(6, 55, 144, 1) 85%, rgba(4, 105, 181, 1) 92%, rgba(2, 156, 218, 1) 98%, rgba(1, 189, 240, 1) 100%, rgba(2, 164, 223, 1) 100%, rgba(1, 179, 233, 1) 100%, rgba(0, 196, 245, 1) 100%, rgba(1, 174, 230, 1) 100%, rgba(3, 147, 212, 1) 100%); 
   
-  /* ----------------------------------
-   1. Root & CSS Variables
-   ---------------------------------- */
-:root {
-  --bg-color: #000000;
-  --primary-color: #02a5e0;
-  --accent-color: #0ff;
-  --card-bg: #212121;
-  --text-color: #edf6f9;
-  --subtext-color: #b0b0b0;
-  --box-shadow-light: 0px 4px 15px rgba(0, 0, 0, 0.15);
-  --border-radius: 1rem;
-  --transition-fast: 0.3s ease;
-}
+  padding: 0 10px;  
+  box-sizing: border-box;  
+}  
 
-/* ----------------------------------
-   2. Global & Reset
-   ---------------------------------- */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+.title {  
+  position:relative;  
+  margin-left:8px;  
+  font-size: 30px;  
+  color: rgb(237, 246, 249); /* or any text color */  
+  text-shadow:    
+  0 0 60px #0ff,  
+  0 0 15px #0ff,  
+ 0 0 20px #0ff;  
+ }  
 
-html {
-  font-size: 100%; /* 16px */
-}
 
-body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  line-height: 1.5;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 64px; /* to account for fixed header */
-}
-
-/* Scrollbar styling (subtle) */
-::-webkit-scrollbar {
-  width: 0.5rem;
-}
-::-webkit-scrollbar-track {
-  background: #111;
-}
-::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 0.25rem;
-}
-
-/* ----------------------------------
-   3. Header (already has critical CSS inline) 
-   ---------------------------------- */
-
-/* ----------------------------------
-   4. Sidebar Navigation
-   ---------------------------------- */
-.sidebar {
-  position: fixed;
-  top: 64px; /* just under the header */
-  left: 0;
-  width: 240px;
-  max-width: 80%;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    hsl(236, 100%, 8%) 0%,
-    hsl(211, 100%, 28%) 100%
-  );
-  box-shadow: var(--box-shadow-light);
-  border-top-right-radius: var(--border-radius);
-  border-bottom-right-radius: var(--border-radius);
-  transform: translateX(-100%);
-  transition: transform var(--transition-fast);
+#menuToggle {
+  position: relative;
+  left: 30px;
   z-index: 999;
+  border: none;
+  height: 50px;
+  width: 50px;
+  font-size: 30px;
+  color: white;
+  border-radius: 25px;
+  cursor: pointer;
+  background: linear-gradient(45deg, oklab(40.8% -0.01 -0.237), oklab(33.8% 0.008 -0.178), oklab(27% 0.02 -0.12), oklab(20.4% 0.021 -0.059), oklab(0% 0 0));
+  transition: all 0.4s ease-in-out;
+  backdrop-filter: blur(0px);
+  opacity: 1;
 }
 
-.sidebar.open {
-  transform: translateX(0);
+  #menuToggle.active {
+  opacity: 0.8;
+  backdrop-filter: blur(6px);
+  transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(72, 202, 228, 0.8);
 }
 
-.sidebar ul {
-  list-style: none;
-  margin-top: 1.5rem;
+#menuToggle {
+-webkit-tap-highlight-color: transparent;
 }
 
-.sidebar li + li {
-  margin-top: 1rem;
-}
+.sidebar {  
+  height: 180px;  
+  width: 140px;  
+  border-radius: 30px;  
+  background: radial-gradient(circle, hsla(236, 100%, 8%, 1) 0%, hsla(211, 100%, 28%, 1) 100%);  
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;  
+  position: fixed;  
+  z-index: 998;  
+  top: 80px;  
+  right: -150px;  
+  transition: right 0.3s ease-in-out;  
+}  
 
-.sidebar a {
-  display: block;
-  padding: 0.75rem 1rem;
-  font-size: 1.125rem;
-  color: #ffffff;
-  text-decoration: none;
-  transition: background-color var(--transition-fast);
-}
-.sidebar a:hover,
-.sidebar a:focus {
-  background-color: rgba(255, 255, 255, 0.1);
-  outline: none;
-}
+.sidebar.open {  
+  right: 10px;  
+}  
 
-/* ----------------------------------
-   5. Main Content Layout
-   ---------------------------------- */
-main {
-  width: 100%;
-  max-width: 1024px;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
+.link {  
+  text-align: center;  
+  line-height: 0.9;  
+  font-size: 24px;  
+  color: white;  
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8);  
+  padding-bottom: 10px;  
+  margin: 11px;  
+}  
 
-/* ----------------------------------
-   6. Quote Section
-   ---------------------------------- */
-.quote-section {
-  background-color: var(--card-bg);
-  border-radius: var(--border-radius);
-  padding: 1.5rem;
-  box-shadow: var(--box-shadow-light);
-  text-align: center;
-}
+.sidebar a {  
+  text-decoration: none;  
+  color: white;  
+}  
 
-.quote-section blockquote {
-  font-size: 1.25rem;
-  font-style: italic;
-  color: var(--text-color);
-  line-height: 1.4;
-}
-
-.quote-section cite {
-  display: block;
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  color: var(--subtext-color);
-}
-
-.quote-section .cite-link {
-  color: var(--accent-color);
-  text-decoration: none;
-  transition: opacity var(--transition-fast);
-}
-.quote-section .cite-link:hover,
-.quote-section .cite-link:focus {
-  opacity: 0.7;
-}
-
-/* ----------------------------------
-   7. Info / Timetable Section
-   ---------------------------------- */
-.info-section {
-  background-color: var(--card-bg);
-  border-radius: var(--border-radius);
-  padding: 1rem;
-  box-shadow: var(--box-shadow-light);
-}
-
-.info-section h2 {
-  font-size: 1.5rem;
-  margin-bottom: 0.75rem;
-  color: var(--text-color);
-}
-
-.timetable-list {
-  list-style: none;
-}
-.timetable-list li {
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-  color: var(--text-color);
-  line-height: 1.4;
-}
-
-/* ----------------------------------
-   8. Gallery Section
-   ---------------------------------- */
-.gallery-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1rem;
-}
-
-.gallery-section img {
-  width: 100%;
-  height: auto;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow-light);
-  object-fit: cover;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-}
-.gallery-section img:hover,
-.gallery-section img:focus {
-  transform: scale(1.02);
-  box-shadow: 0 6px 20px rgba(0, 170, 255, 0.2);
-  outline: none;
-}
-
-/* ----------------------------------
-   9. Video Section
-   ---------------------------------- */
-.video-section {
-  display: flex;
-  justify-content: center;
-}
-
-.video-section video {
-  width: 100%;
-  max-width: 480px;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow-light);
-}
-
-/* ----------------------------------
-   10. Map Section
-   ---------------------------------- */
-.map-section {
-  margin-top: 1rem;
-  width: 100%;
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  box-shadow: var(--box-shadow-light);
-}
-
-/* ----------------------------------
-   11. Footer
-   ---------------------------------- */
-footer {
-  margin: 2rem 0 1rem;
-  font-size: 0.9rem;
-  color: var(--subtext-color);
-  text-align: center;
-}
-
-/* ----------------------------------
-   12. Responsive Adjustments
-   ---------------------------------- */
-@media (max-width: 600px) {
-  .site-title {
-    font-size: 1.5rem;
-  }
-  .quote-section blockquote {
-    font-size: 1.1rem;
-  }
-  .gallery-section {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-@media (max-width: 400px) {
-  .gallery-section {
-    grid-template-columns: 1fr;
-  }
+.message{  
+    height:auto;
+    width:auto;
+    margin:40px 10px 40px 10px;
+    border-radius:22px;
+    background-color:#212121;
+    color:grey;
+    font-size:12px;
+    text-align:center;
 }
   
-  </style>
-</head>
-
-<body>
-  <!-- Floating header (slides down on load) -->
-  <header>
-    <button id="menuToggle" aria-label="Toggle Menu">☰</button>
-    <h1 class="site-title">GET FIT GYM</h1>
-  </header>
-
-  <!-- Sidebar navigation (initially off-screen to the left) -->
-  <nav id="sideMenu" class="sidebar" aria-hidden="true">
-    <ul>
-      <li><a href="#admission">Admission</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="#media">Media</a></li>
-      <li><a href="#about">About Us</a></li>
-    </ul>
-  </nav>
-
-  <!-- Main content wrapper -->
-  <main>
-    <!-- Motivational quote section -->
-    <section class="quote-section">
-      <blockquote>
-        “I hated every minute of training, but I said, ‘Don’t quit. Suffer now
-        and live the rest of your life as a champion.’”
-      </blockquote>
-      <cite>
-        — <a href="https://en.wikipedia.org/wiki/Muhammad_Ali"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="cite-link">
-              Muhammad Ali
-            </a>
-      </cite>
-    </section>
-
-    <!-- Timetable / Info section -->
-    <section class="info-section">
-      <h2>Gym Timings & Info</h2>
-      <ul class="timetable-list">
-        <li>Open time: 5:00 A.M</li>
-        <li>Close time: 9:00 P.M</li>
-        <li>Sunday: Closed</li>
-        <li>Trainer Available</li>
-      </ul>
-    </section>
-
-    <!-- Photo gallery section -->
-    <section class="gallery-section">
-      <picture>
-        <img src="one.jpg" alt="Gym Image 1" loading="lazy" />
-      </picture>
-      <picture>
-        <img src="two.jpg" alt="Gym Image 2" loading="lazy" />
-      </picture>
-      <picture>
-        <img src="three.jpg" alt="Gym Image 3" loading="lazy" />
-      </picture>
-      <picture>
-        <img src="four.jpg" alt="Gym Image 4" loading="lazy" />
-      </picture>
-    </section>
-
-    <!-- Video section -->
-    <section class="video-section">
-      <video autoplay loop muted playsinline>
-        <source src="gym.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-    </section>
-
-    <!-- Map section -->
-    <section class="map-section">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d28680.51424886437!2d93.7633824!3d26.0314527!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3746752d6dfe2185%3A0xeab191399357cc9f!2sGet%20Fit%20Gym!5e0!3m2!1sen!2sin!4v1746192880877!5m2!1sen!2sin"
-        width="100%"
-        height="300"
-        style="border:0;"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-      ></iframe>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    &copy; 2025 Website Designed &amp; Developed by Roshan Thakur. All rights
-    reserved.
-  </footer>
-
-  <!-- External JavaScript (deferred for performance) -->
-  <script>
-// Wait for DOM to load
-document.addEventListener('DOMContentLoaded', () => {
-  const menuToggle = document.getElementById('menuToggle');
-  const sideMenu = document.getElementById('sideMenu');
-
-  let isOpen = false;
-
-  menuToggle.addEventListener('click', () => {
-    isOpen = !isOpen;
-
-    // Toggle ARIA attributes for accessibility
-    sideMenu.setAttribute('aria-hidden', String(!isOpen));
-    menuToggle.setAttribute('aria-expanded', String(isOpen));
-
-    // Toggle classes for animation
-    sideMenu.classList.toggle('open', isOpen);
-    menuToggle.classList.toggle('active', isOpen);
-  });
-
-  // Close sidebar if user clicks outside it
-  document.addEventListener('click', (event) => {
-    if (
-      isOpen &&
-      !sideMenu.contains(event.target) &&
-      event.target !== menuToggle
-    ) {
-      isOpen = false;
-      sideMenu.setAttribute('aria-hidden', 'true');
-      menuToggle.setAttribute('aria-expanded', 'false');
-      sideMenu.classList.remove('open');
-      menuToggle.classList.remove('active');
-    }
-  });
-
-  // Prevent right-click and F12/DevTools keys
-  document.addEventListener('contextmenu', (e) => e.preventDefault());
-  document.addEventListener('keydown', (e) => {
-    if (
-      e.key === 'F12' ||
-      (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C'))
-    ) {
-      e.preventDefault();
-    }
-  });
-
-  // Register service worker (for offline caching)
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-      .register('sw.js')
-      .catch((err) => console.warn('SW registration failed:', err));
+  .timetable{
+    height:auto;
+    width:auto;
+    margin:15px;
+    padding-right:46px;
+    border-radius:22px;
+    background-color:;
+    color:grey;
+    font-size:20px;
+    text-align:center;
+    line-height:1.4;
+    border-color: #212121;
+    border-style:solid;
+    border-width:5px;
   }
-});  
- </script>
-</body>
-</html>
+
+
+ .photo {  
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center;    /* Horizontally center content */
+  justify-content: center; /* Vertically center if height expands */
+  max-width: px;
+  margin: 45px 5px;       /* Center the container itself */
+  border-radius: 20px;  
+  padding: 10px;  
+  background-color:rgba(96, 108, 56.24);
+  
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;  
+  text-align: center;      /* Center any text inside */
+  box-shadow: rgba(0, 119, 182.25) 0px 14px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;  
+
+}
+
+.image {  
+  display: block;  
+  width: 100%;  
+  height: auto;  
+  margin-top: 10px;  
+  border-radius: 12px;  
+  cursor: pointer;  
+}
+
+
+  #video-container {
+  display: grid;
+  place-items: center;
+  padding:25px 0px;
+
+}
+
+video {
+  border-radius: 22px;
+
+  max-width: 280px;  
+
+  box-shadow: rgba(3, 4, 94.25) 0px 24px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;  
+
+
+}
+
+iframe {  
+/**  display: block; **/
+  display:flex;
+  justify-content: center;
+  margin:35px auto;  
+  border-radius: 12px;  
+  box-shadow: rgba(2, 62, 138.25) 0px 24px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;  
+}  
+
+
+  footer{
+            text-align:center;
+            margin-top:30px;
+            margin-bottom:10px;
+            line-height:1.3;
+            font-size:14px;
+            color:white;
+  }
+
+
+
+</style>  
+</head>  
+<body>    
+
+  <body>
+
+
+  <div class="floatbar">
+<h1 class="title">GET FIT GYM</h1>
+<button id="menuToggle">☰</button>
+  </div>    
+
+
+<div     id="sideMenu"  class="sidebar">  
+    <a href="">  
+      <h1 class="link" style="font-size:21px;">admission</h1>  
+    </a>
+    <h1 class="link">contact</h1>  
+    <h1 class="link">media</h1>  
+    <h1 class="link" style="border-bottom:none;">about us</h1>  
+
+</div>     
+
+    <div class="message">
+<h1>  
+  "I hated every minute of training, but I said, 'Don't quit. Suffer now and live the rest of your life as a champion.'" -   
+  <a href="https://en.wikipedia.org/wiki/Muhammad_Ali" target="_blank" style="color: darkred; font-style: italic; text-decoration: none;">  
+    Muhammad Ali  
+  </a>
+</h1>    
+</div>
+
+
+<div class="timetable">
+<ul style="list-style: none;">  
+  <li>Open time 5:00.......A.M</li>  
+  <li>Close time 9:00......P.M</li>  
+  <li>Sunday off</li>  
+  <li>Trainer available</li>  
+</ul>    
+</div>
+
+  <div class="photo">  
+  <img class="image" src="one.jpg" alt="Gym Image 1">  
+  <img class="image" src="two.jpg" alt="Gym Image 2">  
+  <img class="image" src="three.jpg" alt="Gym Image 3">  
+  <img class="image" src="four.jpg" alt="Gym Image 4">
+</div>
+
+    <div id="video-container">
+  <video autoplay loop muted>
+    <source src="gym.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d28680.51424886437!2d93.7633824!3d26.0314527!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3746752d6dfe2185%3A0xeab191399357cc9f!2sGet%20Fit%20Gym!5e0!3m2!1sen!2sin!4v1746192880877!5m2!1sen!2sin" width="300" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+
+    <footer>
+© [2025] Website Design & Devloped by Roshan Thakur. All rights reserved.</footer>
+
+<script>  
+
+  document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();  // Disable right-click context menu
+});
+
+document.addEventListener('keydown', function(e) {
+  // Disable F12 and Ctrl+Shift+I (DevTools open shortcuts)
+  if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C'))) {
+    e.preventDefault();
+  }
+});
+
+    const menuToggle = document.getElementById('menuToggle');  
+    const sideMenu = document.getElementById('sideMenu');  
+    let isOpen = false;  
+
+    menuToggle.addEventListener('click', () => {  
+      isOpen = !isOpen;  
+      sideMenu.classList.toggle('open');  
+      menuToggle.textContent = isOpen ? '×' : '☰';
+      menuToggle.classList.toggle('active', isOpen);     
+    }); 
+
+  if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+  }
+
+  </script>
+ </body>  
+</html>  
