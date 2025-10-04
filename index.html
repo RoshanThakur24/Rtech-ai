@@ -80,12 +80,12 @@
   opacity: 1;
 }
 
-  #menuToggle.active {
-  opacity: 0.8;
-  backdrop-filter: blur(6px);
-  transform: scale(1.1);
-  box-shadow: 0 0 12px rgba(72, 202, 228, 0.8);
-}
+ #menuToggle:hover{
+   opacity: 0.8;
+   backdrop-filter: blur(6px);
+   transform: scale(1.1);
+   box-shadow: 0 0 12px rgba(72, 202, 228, 0.8);
+ }
 
 #menuToggle {
 -webkit-tap-highlight-color: transparent;
@@ -102,21 +102,32 @@
   top: 80px;  
   right: -150px;  
   transition: right 0.3s ease-in-out;  
-}  
+}
 
 .sidebar.open {  
   right: 10px;  
 }  
 
-.link {  
-  text-align: center;  
-  line-height: 0.9;  
-  font-size: 24px;  
-  color: white;  
-  border-bottom: 1px solid rgba(255, 255, 255, 0.8);  
-  padding-bottom: 10px;  
-  margin: 11px;  
-}  
+.link {
+  text-align: center;
+  line-height: 0.9;
+  font-size: 24px;
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+  padding-bottom: 10px;
+  margin: 11px;
+
+  /* smooth transform animation */
+  transition: transform 0.25s ease;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.link:hover {
+  transform: scale(1.2);
+  /* color change will still work as before */
+  color: rgb(112, 63, 192);
+}
 
 .sidebar a {  
   text-decoration: none;  
@@ -178,10 +189,13 @@
   }
 
   #video-container {
-  display: grid;
-  place-items: center;
-  padding:25px 0px;
+  transform: scale(1);
+  transition: transform 300ms cubic-bezier(.2,.9,.3,1);
+  will-change: transform;
+}
 
+#video-container:hover {
+  transform: scale(1.1);
 }
 
 video {
@@ -300,6 +314,31 @@ document.addEventListener('keydown', function(e) {
       menuToggle.textContent = isOpen ? '×' : '☰';
       menuToggle.classList.toggle('active', isOpen);     
     }); 
+
+    // Close sidebar when clicking outside of it
+    document.addEventListener('click', (e) => {
+      // If menu is not open, nothing to do
+      if (!isOpen) return;
+
+      // If the click target is the toggle button or inside the sidebar, ignore
+      if (sideMenu.contains(e.target) || menuToggle.contains(e.target)) return;
+
+      // Otherwise close the sidebar
+      isOpen = false;
+      sideMenu.classList.remove('open');
+      menuToggle.textContent = '☰';
+      menuToggle.classList.remove('active');
+    });
+
+    // Also close on Escape for accessibility
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        isOpen = false;
+        sideMenu.classList.remove('open');
+        menuToggle.textContent = '☰';
+        menuToggle.classList.remove('active');
+      }
+    });
 
   if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
