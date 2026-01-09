@@ -1,0 +1,248 @@
+/* --- GLOBAL DEFAULTS & BASE STYLES --- */
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box; /* Crucial for responsive layouts */
+}
+
+body {  
+  margin: 0;  
+  padding: 0;  
+  font-family: sans-serif;  
+  line-height: 1.15;  
+  background-color: black; 
+  display: flex;
+  flex-direction: column;      
+  align-items: center;
+  min-height: 100vh; /* Ensures background covers full screen */
+  overflow-x: hidden; /* Prevents side scrolling */
+}
+
+/* Header Bar */
+.floatbar {  
+  display: flex;  
+  justify-content: space-between; /* Pushes Title left, Menu right */
+  align-items: center;  
+  height: 70px;  
+  width: 100%;  
+  padding: 0 20px; /* Add breathing room on sides */
+  background: radial-gradient(circle, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 18%, rgba(6, 70, 157, 1) 44%, rgba(0, 212, 255, 1) 100%);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 1000;
+}  
+
+.title {  
+  font-size: 24px;  
+  color: rgb(237, 246, 249); 
+  text-shadow: 0 0 60px #0ff, 0 0 15px #0ff, 0 0 20px #0ff;  
+  animation: move 4s linear infinite normal;
+  white-space: nowrap;
+} 
+
+@keyframes move {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); } /* Reduced scale slightly for smoother look */
+  100% { transform: scale(1); }
+}
+
+/* Menu Button */
+#menuToggle {
+  border: none;
+  height: 50px;
+  width: 50px;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border-radius: 50%; /* Standard CSS for circle */
+  cursor: pointer;
+  background: linear-gradient(45deg, #48cae4, #023e8a);
+  transition: all 0.4s ease-in-out;
+  backdrop-filter: blur(0px);
+  z-index: 1001; /* Ensure it's above sidebar */
+}
+
+/* Sidebar */
+.sidebar {  
+  height: auto;
+  min-height: 250px;
+  width: 200px;  
+  border-radius: 30px;  
+  background: radial-gradient(circle, hsla(236, 100%, 8%, 0.95) 0%, hsla(211, 100%, 28%, 0.95) 100%);  
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;  
+  position: fixed;  
+  z-index: 999;  
+  top: 80px;  
+  right: -220px; /* Hide completely off screen */
+  transition: right 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);  
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+.sidebar.open {  
+  right: 15px; /* Bring into view */
+}  
+
+.link {
+  text-align: center;
+  font-size: 20px;
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 15px 0;
+  margin: 0 15px;
+  transition: transform 0.25s ease, color 0.25s ease;
+  text-decoration: none;
+}
+
+/* Content Containers */
+.photo {  
+  display: flex;
+  flex-direction: column; 
+  align-items: center;    
+  justify-content: center; 
+  margin: 30px auto;       
+  border-radius: 20px;  
+  padding: 15px;  
+  background-color: rgba(96, 108, 56, 0.8); /* Fixed alpha */
+  text-align: center;      
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.image {  
+  display: block;  
+  width: 100%;  
+  height: auto;  
+  border-radius: 12px;  
+}
+
+#video-container {
+  transition: transform 300ms cubic-bezier(.2,.9,.3,1);
+  margin: 20px 0;
+}
+
+video {
+  border-radius: 22px;
+  width: 100%; /* Responsive width */
+  height: auto;
+  box-shadow: rgba(3, 4, 94, 0.5) 0px 24px 55px;  
+}
+
+iframe {  
+  display: flex;
+  justify-content: center;
+  margin: 35px auto;  
+  border-radius: 20px;  
+  border: none;
+  box-shadow: rgba(2, 62, 138, 0.5) 0px 24px 55px;  
+}  
+
+footer {
+  text-align: center;
+  margin-top: auto; /* Pushes footer to bottom */
+  padding: 30px 10px;
+  line-height: 1.3;
+  font-size: 14px;
+  color: white;
+}
+
+
+/* =========================================
+   MOBILE & TABLET (0px - 1000px)
+   ========================================= */
+@media screen and (min-width: 0px) and (max-width: 1000px) {
+  
+  .title {
+    font-size: 20px; /* Smaller font for mobile */
+  }
+
+  .floatbar {
+    height: 60px; /* Slightly shorter header */
+    padding: 0 15px;
+  }
+
+  #menuToggle {
+    height: 40px;
+    width: 40px;
+    font-size: 22px;
+  }
+
+  .sidebar {
+    width: 180px; /* Slightly narrower sidebar */
+  }
+
+  /* Content takes up most of the screen width on phones */
+  .photo, 
+  #video-container,
+  iframe,
+  .timetable,
+  .message {
+    width: 90%; 
+    max-width: 400px; /* Stop it from getting too big on tablets */
+  }
+
+  iframe {
+    width: 90%;
+    height: 250px; /* Fixed height for mobile iframes */
+  }
+}
+
+
+/* =========================================
+   PC / DESKTOP (1001px +)
+   ========================================= */
+@media screen and (min-width: 1001px) {
+
+  .title {
+    font-size: 32px; /* Larger title */
+    margin-left: 20px;
+  }
+
+  .floatbar {
+    height: 80px;
+    padding: 0 40px;
+  }
+
+  #menuToggle:hover {
+    opacity: 0.9;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(72, 202, 228, 0.8);
+  }
+
+  .sidebar {
+    width: 250px; /* Wider sidebar */
+    top: 90px;
+  }
+
+  .link:hover {
+    transform: scale(1.1);
+    color: rgb(112, 63, 192);
+    cursor: pointer;
+  }
+
+  /* Layout for Desktop Content - preventing full stretch */
+  .photo, 
+  .timetable,
+  .message {
+    width: 600px; /* Fixed nice width for reading */
+    max-width: 100%;
+  }
+
+  #video-container {
+    width: 500px;
+  }
+
+  #video-container:hover {
+    transform: scale(1.05); /* Only hover effect on PC */
+  }
+
+  iframe {
+    width: 600px;
+    height: 350px;
+  }
+}
