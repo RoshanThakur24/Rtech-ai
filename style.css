@@ -85,6 +85,7 @@
   height: 180px;  
   width: 140px;  
   border-radius: 30px;  
+  corner-shape:squircle;
   background: radial-gradient(circle, hsla(236, 100%, 8%, 1) 0%, hsla(211, 100%, 28%, 1) 100%);  
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;  
   position: fixed;  
