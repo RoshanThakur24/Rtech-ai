@@ -128,7 +128,7 @@
 .message{  
     height:auto;
     width:auto;
-    margin:40px 10px 40px 10px;
+    margin:40px 10px 80px 10px;
     border-radius:50px;
     background-color:#212121;
     color:grey;
@@ -161,7 +161,7 @@
   align-items: center;    /* Horizontally center content */
   justify-content: center; /* Vertically center if height expands */
   max-width: px;
-  margin: 45px 5px;       /* Center the container itself */
+  margin: 80px 5px;       /* Center the container itself */
   border-radius: 20px;  
   padding: 10px;  
   background-color:rgba(96, 108, 56.24);
